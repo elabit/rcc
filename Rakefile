@@ -30,18 +30,19 @@ task :noassets do
 end
 
 def download_link(version, platform, filename)
-    "https://downloads.robocorp.com/micromamba/#{version}/#{platform}/#{filename}"
+    # "https://downloads.robocorp.com/micromamba/#{version}/#{platform}/#{filename}"
+    "https://github.com/mamba-org/micromamba-releases/releases/download/1.5.8-0/micromamba-#{platform}"
 end
 
 task :micromamba do
     version = File.read('assets/micromamba_version.txt').strip()
     puts "Using micromamba version #{version}"
-    url = download_link(version, "macos64", "micromamba")
-    sh "curl -o blobs/assets/micromamba.darwin_amd64 #{url}"
-    url = download_link(version, "windows64", "micromamba.exe")
-    sh "curl -o blobs/assets/micromamba.windows_amd64 #{url}"
-    url = download_link(version, "linux64", "micromamba")
-    sh "curl -o blobs/assets/micromamba.linux_amd64 #{url}"
+    url = download_link(version, "osx-64", "micromamba")
+    sh "curl --location -o blobs/assets/micromamba.darwin_amd64 #{url}"
+    url = download_link(version, "win-64", "micromamba.exe")
+    sh "curl --location -o blobs/assets/micromamba.windows_amd64 #{url}"
+    url = download_link(version, "linux-64", "micromamba")
+    sh "curl --location -o blobs/assets/micromamba.linux_amd64 #{url}"
     sh "gzip -f -9 blobs/assets/micromamba.*"
 end
 
